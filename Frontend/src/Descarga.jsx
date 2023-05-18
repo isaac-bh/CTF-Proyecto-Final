@@ -1,13 +1,10 @@
 import alertify from 'alertifyjs';
 import { saveAs } from 'file-saver';
 
-export const Descarga = (cifrar, imagen) => {
+export const Descarga = ({cifrar, cifrada}) => {
     const downloadImage = () => {
-        //Aqui falta algo :v
-        const blob = new Blob([imagen], { type: 'image/png' });
-        const url = URL.createObjectURL(blob);
-        if (imagen) {
-            saveAs(url, 'image.png');
+        if (cifrada) {
+            saveAs(cifrada, 'image.png');
         } else {
             alertify.warning("No hay nada para descargar");
         }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Descarga } from './Descarga';
 import axios from 'axios';
 import alertify from 'alertifyjs';
+import { Buffer } from "buffer";
 import 'alertifyjs/build/css/alertify.css';
 import './styles/switch.css'
 
@@ -9,7 +10,7 @@ import './styles/switch.css'
 export const App = () => {
   const [cifrar, setCifrar] = useState(true);
   const [img, setImg] = useState({ "file" : null, "preview" : "" } );
-  const [cifrada, setCifrada] = useState();
+  const [cifrada, setCifrada] = useState("");
   const [texto, setTexto] = useState(""); 
   
 
@@ -25,7 +26,6 @@ export const App = () => {
 
   const handleText = (event) => {
     setTexto(event.target.value);
-    console.log(texto);
   }
 
 
@@ -62,9 +62,11 @@ export const App = () => {
               method: "POST",
               url: "http://localhost:8000/encode",
               data: formData,
+              responseType: 'arraybuffer'
             }).then((response) => {
-              setCifrada(response.data);
-              console.log(response);
+              let base64ImageString = Buffer.from(response.data, 'binary').toString('base64')
+              let srcValue = "data:image/png;base64," + base64ImageString
+              setCifrada(srcValue);
             });
             alertify.success("Texto cifrado");
     
@@ -133,7 +135,7 @@ export const App = () => {
         </div>
 
         <div className='grid justify-around sm:grid-cols-2'>
-          <Descarga cifrar={ cifrar } imagen={ cifrada }/>
+          <Descarga cifrar={ cifrar } cifrada={ cifrada }/>
           <button className="my-2 mx-auto w-40 border-none rounded-full px-4 bg-blue-400 hover:bg-blue-500 focus:outline-none 
               font-medium rounded-lg text-white py-1" onClick={ procesarImagen }> 
               { cifrar ? "Cifrar" : "Descifrar " } 
