@@ -29,9 +29,22 @@ export const App = () => {
   }
 
 
-  const descifrarImagen = () => {
-    if (texto != "") {
-      console.log(texto);
+  const descifrarImagen = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("image", img.file);
+      await axios({
+        method: "POST",
+        url: "http://localhost:8000/decode",
+        data: formData,
+      }).then((response) => {
+        document.getElementById("dropzone-file2").value = response.data.message;
+      });
+      alertify.success("Imagen descifrada");
+
+    } catch (e) {
+      alertify.error("Algo salio mal");
+      console.log(e);
     }
   }
 
@@ -103,8 +116,8 @@ export const App = () => {
                         strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 
                           9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
                     <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                      <span className="font-semibold">Cifrar </span>
-                      en imagen
+                      <span className="font-semibold">Subir </span>
+                      imagen
                     </p>
                 </div>
                 <input id="dropzone-file1" type="file" className="hidden" name="img" accept='.png' onChange={ handleImagen }/>
