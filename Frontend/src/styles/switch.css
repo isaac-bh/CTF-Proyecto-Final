@@ -1,0 +1,40 @@
+.sw[type=checkbox]{
+    height: 0;
+    width: 0;
+    visibility: hidden;
+  }
+  
+  .lbl_sw {
+    cursor: pointer;
+    text-indent: -9999px;
+    background: #3b82f6;
+    display: block;
+    border-radius: 100px;
+    position: relative;
+  }
+  
+  .lbl_sw:after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 30%;
+    height: 50%;
+    background: #fff;
+    border-radius: 90px;
+    transition: 0.3s;
+  }
+  
+  .sw:checked + .lbl_sw {
+    background: #34d399;
+  }
+  
+  .sw:checked + .lbl_sw:after {
+    left: calc(100% - 5px);
+    transform: translateX(-100%);
+  }
+  
+  .lbl_sw:active:after {
+    width: 10%;
+  }
+  
