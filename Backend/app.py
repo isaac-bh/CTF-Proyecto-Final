@@ -1,11 +1,19 @@
 from fastapi import FastAPI, File, UploadFile, Form
 from estenografia import encode, decode
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from PIL import Image
 from io import BytesIO
 
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["+"],
+    allow_headers=["*"],
+)
 
 
 @app.post("/encode")

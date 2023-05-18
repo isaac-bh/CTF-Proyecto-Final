@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react'
+import { Descarga } from './Descarga';
+import axios from 'axios';
+import alertify from 'alertifyjs';
+import 'alertifyjs/build/css/alertify.css';
 import './styles/switch.css'
 
 
 export const App = () => {
-  const [img, setImg] = useState({ "file" : null, "preview" : "" } );
   const [cifrar, setCifrar] = useState(true);
+  const [img, setImg] = useState({ "file" : null, "preview" : "" } );
+  const [cifrada, setCifrada] = useState();
+  const [texto, setTexto] = useState(""); 
+  
 
   const handleImagen = (event) => {
     event.preventDefault();
@@ -14,6 +21,55 @@ export const App = () => {
       ["file"] : event.target.files[0]
     });
   }
+
+
+  const handleText = (event) => {
+    setTexto(event.target.value);
+    console.log(texto);
+  }
+
+
+  const descifrarImagen = () => {
+    if (texto != "") {
+      console.log(texto);
+    }
+  }
+
+
+  const procesarImagen = async (event) => {
+    event.preventDefault();
+    if (img.file) {
+      if (cifrar) {
+        if (texto != "") {
+          try {
+            const formData = new FormData();
+            formData.append("image", img.file);
+            formData.append("msg", texto)
+            await axios({
+              method: "POST",
+              url: "http://localhost:8000/encode",
+              data: formData,
+            }).then((response) => {
+              setCifrada(response.data);
+              console.log(response);
+            });
+            alertify.success("Texto cifrado");
+    
+          } catch (e) {
+            alertify.error("Algo salio mal");
+            console.log(e);
+          }
+        } else {
+          alertify.warning("Nada para cifrar...")
+        }
+      } else {
+        descifrarImagen();
+      }
+    } else {
+      alertify.warning("Ingrese una imagen");
+    }
+  }
+
 
   return (
     <div className='w-screen h-screen bg-blue-300 text-slate-800 p-4'>
@@ -43,36 +99,33 @@ export const App = () => {
                 backgroundPosition: "center" }} name="img">
                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
                     <svg aria-hidden="true" className="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" 
-                        stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 
+                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" 
+                        strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 
                           9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
                     <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
                       <span className="font-semibold">Cifrar </span>
                       en imagen
                     </p>
                 </div>
-                <input id="dropzone-file1" type="file" className="hidden" accept='.png' onChange={ handleImagen }/>
+                <input id="dropzone-file1" type="file" className="hidden" name="img" accept='.png' onChange={ handleImagen }/>
             </label>
           </div> 
           <div className="block items-center justify-center m-1">
-              <textarea id="dropzone-file2" type="text" maxLength="100" className='flex w-full
+              <textarea id="dropzone-file2" type="text" maxLength="100" name="msg" className='flex w-full
                 h-full mr-4 border-2 rounded-lg p-4 border-dashed border-black border-2 border-dashed rounded-lg cursor-pointer 
                 bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-600
                 outline-none
-              ' placeholder={ cifrar ? "Ingrese el texto a cifrar" : "Texto descifrado..." }/>
+              ' placeholder={ cifrar ? "Ingrese el texto a cifrar" : "Texto descifrado..." } onChange={ handleText }/>
           </div> 
         </div>
+
         <div className='grid justify-around sm:grid-cols-2'>
-        <button className="my-2 mx-auto w-40 border-none rounded-full px-4 bg-green-300 hover:bg-green-400 focus:outline-none 
-            font-medium rounded-lg text-white py-1" disabled={ cifrar } > 
-            Descargar 
-        </button>
-        <button className="my-2 mx-auto w-40 border-none rounded-full px-4 bg-blue-400 hover:bg-blue-500 focus:outline-none 
-            font-medium rounded-lg text-white py-1" > 
-            { cifrar ? "Cifrar" : "Descifrar " } 
-        </button>
+          <Descarga cifrar={ cifrar } imagen={ cifrada }/>
+          <button className="my-2 mx-auto w-40 border-none rounded-full px-4 bg-blue-400 hover:bg-blue-500 focus:outline-none 
+              font-medium rounded-lg text-white py-1" onClick={ procesarImagen }> 
+              { cifrar ? "Cifrar" : "Descifrar " } 
+          </button>
         </div>
-        
       </div>
     </div>
   )
