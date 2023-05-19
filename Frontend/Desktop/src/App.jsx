@@ -87,14 +87,14 @@ export const App = () => {
 
 
   return (
-    <div className='w-screen h-screen bg-blue-300 text-slate-800'>
+    <div className='w-screen h-screen bg-blue-300 text-slate-800 py-4'>
       <h1 className='text-5xl font-black text-center'>
         Esteganografía Express
       </h1>
       <div className=' w-2/3 h-2/3 my-10 mx-auto bg-blue-200 rounded-lg flex flex-col p-4
           justify-between
       '>
-          <p className=' text-3xl text-center'>
+          <p className=' text-3xl text-center font-bold'>
             Elige una opción: 
           </p>
 
@@ -155,7 +155,7 @@ export const App = () => {
         </div>
       </div>
 
-      <div className='font-bold absolute bottom-0 w-full text-center'>
+      <div className='font-light absolute bottom-0 w-full text-center'>
         <p>Computación Tolerante a Fallas - D06 - <span>Isaac Benavides, Isaac Lomelí, Jonathan Romo</span></p>
       </div>
     </div>
