@@ -87,7 +87,7 @@ export const App = () => {
 
 
   return (
-    <div className='w-screen h-screen bg-blue-300 text-slate-800 p-4'>
+    <div className='w-screen h-screen bg-blue-300 text-slate-800'>
       <h1 className='text-5xl font-black text-center'>
         Esteganografía Express
       </h1>
@@ -112,16 +112,23 @@ export const App = () => {
                 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-600
                 " style={{ backgroundImage: "url(" + img.preview + ")", backgroundSize: "contain", backgroundRepeat: "no-repeat",
                 backgroundPosition: "center" }} name="img">
-                <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                    <svg aria-hidden="true" className="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" 
-                        strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 
-                          9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                    <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                      <span className="font-semibold">Subir </span>
-                      imagen
-                    </p>
-                </div>
+                {
+                  (img.file === null) ?
+                    <>
+                      <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                        <svg aria-hidden="true" className="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" 
+                            strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 
+                            9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                        <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                          <span className="font-semibold">Subir </span>
+                          imagen
+                        </p>
+                      </div>
+                    </>
+                  :
+                  <></>
+                }
                 <input id="dropzone-file1" type="file" className="hidden" name="img" accept='.png' onChange={ handleImagen }/>
             </label>
           </div> 
@@ -134,13 +141,22 @@ export const App = () => {
           </div> 
         </div>
 
-        <div className='grid justify-around sm:grid-cols-2'>
-          <Descarga cifrar={ cifrar } cifrada={ cifrada }/>
+        <div className={cifrar ? `grid justify-around sm:grid-cols-2` : `grid sm:grid-cols-1`}>
+          {
+            cifrar ?
+              <Descarga cifrar={ cifrar } cifrada={ cifrada }/>
+            :
+              <></>
+          }
           <button className="my-2 mx-auto w-40 border-none rounded-full px-4 bg-blue-400 hover:bg-blue-500 focus:outline-none 
               font-medium rounded-lg text-white py-1" onClick={ procesarImagen }> 
               { cifrar ? "Cifrar" : "Descifrar " } 
           </button>
         </div>
+      </div>
+
+      <div className='font-bold absolute bottom-0 w-full text-center'>
+        <p>Computación Tolerante a Fallas - D06 - <span>Isaac Benavides, Isaac Lomelí, Jonathan Romo</span></p>
       </div>
     </div>
   )
