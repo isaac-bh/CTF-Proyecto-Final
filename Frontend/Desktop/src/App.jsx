@@ -129,7 +129,7 @@ export const App = () => {
                   :
                   <></>
                 }
-                <input id="dropzone-file1" type="file" className="hidden" name="img" accept='.png' onChange={ handleImagen }/>
+                <input id="dropzone-file1" type="file" className="hidden" name="img" accept='image/*' onChange={ handleImagen }/>
             </label>
           </div> 
           <div className="block items-center justify-center m-1">

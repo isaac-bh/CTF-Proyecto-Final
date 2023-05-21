@@ -4,7 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from PIL import Image
 from io import BytesIO
-
+import asyncio
+from os import path
 
 app = FastAPI()
 
@@ -18,6 +19,9 @@ app.add_middleware(
 
 @app.post("/encode")
 async def encode_route(msg: str = Form(...), image: UploadFile = File(...)):
+    if path.splitext(image.filename)[1] != 'png':
+        await stop()
+
     image_data = await image.read()
     img = Image.open(BytesIO(image_data))
 
@@ -31,11 +35,19 @@ async def encode_route(msg: str = Form(...), image: UploadFile = File(...)):
 
 @app.post("/decode")
 async def decode_route(image: UploadFile = File(...)):
+    if path.splitext(image.filename)[1] != 'png':
+        await stop()
+
     image_data = await image.read()
     img = Image.open(BytesIO(image_data))
     
     msg = decode(img)
     return {"message": msg}
+
+
+async def stop():
+    loop = asyncio.get_event_loop()
+    loop.stop()
 
 
 @app.get("/")
