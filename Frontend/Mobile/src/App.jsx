@@ -9,6 +9,7 @@ import './styles/switch.css'
 
 export const App = () => {
   const [cifrar, setCifrar] = useState(true);
+  const [pngOnly, setPNGOnly] = useState(true);
   const [img, setImg] = useState({ "file" : null, "preview" : "" } );
   const [cifrada, setCifrada] = useState("");
   const [texto, setTexto] = useState(""); 
@@ -88,10 +89,10 @@ export const App = () => {
 
   return (
     <div className='w-screen h-screen bg-blue-900 text-slate-800 py-4'>
-      <h1 className='text-3xl font-black text-white text-center'>
+      <h1 className='text-xl font-black text-white text-center'>
         Esteganografía Express para moviles
       </h1>
-      <div className=' w-5/6 h-2/3 my-10 mx-auto bg-gray-800 rounded-lg flex flex-col p-4
+      <div className=' w-5/6 h-23 my-10 mx-auto bg-gray-800 rounded-lg flex flex-col p-4
           justify-between text-white
       '>
           <p className=' text-2xl text-center font-bold'>
@@ -103,6 +104,13 @@ export const App = () => {
             <input className='sw' type="checkbox" id="switch" onChange={() => setCifrar(!cifrar)} />
             <label className='lbl_sw h-6 w-12' for="switch">Toggle</label>
             <label className='ml-2'> Descifrar </label>
+          </div>
+         
+          <div className='flex mx-auto my-4'>
+            <label className='mr-2'> PNG </label>
+            <input className='sw' type="checkbox" id="error" onChange={() => setPNGOnly(!pngOnly)} />
+            <label className='lbl_sw h-6 w-12' for="error">Toggle</label>
+            <label className='ml-2'> * Types </label>
           </div>
 
         <div className='grid justify-around p-4 h-full sm:grid-cols-2'>
@@ -128,7 +136,7 @@ export const App = () => {
                   :
                   <></>
                 }
-                <input id="dropzone-file1" type="file" className="hidden" name="img" accept='image/*' onChange={ handleImagen }/>
+                <input id="dropzone-file1" type="file" className="hidden" name="img" accept={(pngOnly) ? 'image/png' : 'image/*'} onChange={ handleImagen }/>
             </label>
           </div> 
           <div className="block items-center justify-center m-1 my-4">
@@ -154,7 +162,7 @@ export const App = () => {
         </div>
       </div>
 
-      <div className='font-light absolute bottom-0 w-full text-center text-white'>
+      <div className='font-light w-full text-center text-white'>
         <p>Computación Tolerante a Fallas - D06 - <span>Isaac Benavides, Isaac Lomelí, Jonathan Romo</span></p>
       </div>
     </div>

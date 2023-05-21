@@ -1,3 +1,7 @@
+:root {
+  background: #1e3a8a;
+}
+
 .sw[type=checkbox]{
     height: 0;
     width: 0;
