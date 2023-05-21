@@ -9,7 +9,6 @@ import './styles/switch.css'
 
 export const App = () => {
   const [cifrar, setCifrar] = useState(true);
-  const [pngOnly, setPNGOnly] = useState(true);
   const [img, setImg] = useState({ "file" : null, "preview" : "" } );
   const [cifrada, setCifrada] = useState("");
   const [texto, setTexto] = useState(""); 
@@ -105,13 +104,6 @@ export const App = () => {
             <label className='lbl_sw h-6 w-12' for="switch">Toggle</label>
             <label className='ml-2'> Descifrar </label>
           </div>
-         
-          <div className='flex mx-auto my-4'>
-            <label className='mr-2'> PNG </label>
-            <input className='sw' type="checkbox" id="error" onChange={() => setPNGOnly(!pngOnly)} />
-            <label className='lbl_sw h-6 w-12' for="error">Toggle</label>
-            <label className='ml-2'> * Types </label>
-          </div>
 
         <div className='grid justify-around p-4 h-full sm:grid-cols-2'>
           <div className="block items-center justify-center m-1" >
@@ -137,7 +129,7 @@ export const App = () => {
                   :
                   <></>
                 }
-                <input id="dropzone-file1" type="file" className="hidden" name="img" accept={(pngOnly) ? 'image/png' : 'image/*'} onChange={ handleImagen }/>
+                <input id="dropzone-file1" type="file" className="hidden" name="img" accept='image/png' onChange={ handleImagen }/>
             </label>
           </div> 
           <div className="block items-center justify-center m-1">
