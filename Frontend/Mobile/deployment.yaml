@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tolerante-esteganografia-mobile-deployment
+  labels:
+    app: toleranteesteganografiamobile
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: toleranteesteganografiamobile
+  template:
+    metadata:
+      labels:
+        app: toleranteesteganografiamobile
+    spec:
+      containers:
+      - name: toleranteesteganografiamobile
+        image: jonhyble/tolerante_esteganografia_mobile:1.0
+        ports:
+        - containerPort: 5173
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: tolerante-esteganografia-mobile-service
+  labels:
+    app: tolerante-esteganografia-mobile-service
+spec:
+  selector:
+    app: toleranteesteganografiamobile
+  ports:
+    - protocol: TCP
+      port: 5173
+      targetPort: 5173
+  sessionAffinity: None

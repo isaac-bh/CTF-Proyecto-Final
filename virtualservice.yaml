@@ -1,0 +1,30 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: tolerante-esteganografia-service-ingress
+spec:
+  hosts: 
+  - '*'
+  gateways:
+  - tolerante-esteganografia-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /v1/
+    rewrite:
+        uri: /
+    route:
+    - destination:
+        host: tolerante-esteganografia-desktop-service
+        port:
+          number: 5173
+  - match:
+    - uri:
+        prefix: /v2/
+    rewrite:
+        uri: /
+    route:
+    - destination:
+        host: tolerante-esteganografia-mobile-service
+        port: 
+          number: 5173
