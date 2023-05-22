@@ -16,9 +16,10 @@ spec:
     spec:
       containers:
       - name: ctf-frontend-mobile
-        image: jonhyble/tolerante_esteganografia_mobile:1.0
+        image: isaacbh/ctf-frontend-mobile
         ports:
-        - containerPort: 5173
+        - containerPort: 80
+        imagePullPolicy: Always
 
 ---
 
@@ -32,7 +33,7 @@ spec:
   selector:
     app: ctf-frontend-mobile
   ports:
-    - protocol: TCP
-      port: 5173
-      targetPort: 5173
+    - name: http
+      port: 80
+      targetPort: 80
   sessionAffinity: None

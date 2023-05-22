@@ -32,6 +32,21 @@ spec:
   - match:
     - uri:
         prefix: /app/
+      headers:
+        User-Agent:
+          regex: ".*Mobile.*"
+    rewrite:
+        uri: "/"
+    route:
+    - destination:
+        host: ctf-frontend-mobile-service
+    timeout: 7s
+    retries:
+      attempts: 3
+      perTryTimeout: 7s     
+  - match:
+    - uri:
+        prefix: /app/
     rewrite:
         uri: "/"
     route:

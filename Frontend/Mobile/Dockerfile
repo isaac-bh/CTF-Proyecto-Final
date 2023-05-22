@@ -1,10 +1,11 @@
-FROM node:18-alpine
+# Utiliza una imagen base ligera de Nginx
+FROM nginx:alpine
 
-WORKDIR /usr/src/app
+# Copia los archivos estáticos de tu aplicación a la carpeta de contenido estático de Nginx
+COPY dist /usr/share/nginx/html
 
-COPY package*.json ./
-RUN npm install
+# Expone el puerto 80 para que se pueda acceder a la aplicación
+EXPOSE 80
 
-COPY . /usr/src/app
-
-CMD ["npm", "run", "dev"]
+# Inicia el servidor Nginx
+CMD ["nginx", "-g", "daemon off;"]

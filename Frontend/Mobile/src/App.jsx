@@ -35,7 +35,7 @@ export const App = () => {
       formData.append("image", img.file);
       await axios({
         method: "POST",
-        url: "http://ctf-backend:8000/decode",
+        url: "http://45.79.61.211/api/decode",
         data: formData,
       }).then((response) => {
         document.getElementById("dropzone-file2").value = response.data.message;
@@ -60,7 +60,7 @@ export const App = () => {
             formData.append("msg", texto)
             await axios({
               method: "POST",
-              url: "http://ctf-backend:8000/encode",
+              url: "http://45.79.61.211/api/encode",
               data: formData,
               responseType: 'arraybuffer'
             }).then((response) => {
