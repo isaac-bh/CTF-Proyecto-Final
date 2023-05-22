@@ -29,7 +29,6 @@ metadata:
   labels:
     app: ctf-backend-proxy-service
 spec:
-  type: LoadBalancer
   ports:
     - name: http
       port: 8000

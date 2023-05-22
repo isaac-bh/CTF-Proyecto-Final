@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: ctf-esteganografia-gateway
+  name: ctf-proyecto-final-gateway
 spec:
   selector:
     app: istio-ingressgateway

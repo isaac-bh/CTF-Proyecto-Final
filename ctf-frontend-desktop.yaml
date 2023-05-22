@@ -30,7 +30,6 @@ metadata:
   labels:
     app: ctf-frontend-desktop-service
 spec:
-  type: LoadBalancer
   selector:
     app: ctf-frontend-desktop
   ports:

@@ -35,7 +35,7 @@ export const App = () => {
       formData.append("image", img.file);
       await axios({
         method: "POST",
-        url: "http://10.97.47.148:8000/decode",
+        url: "http://45.79.61.211/api/decode",
         data: formData,
         headers: {
           'Access-Control-Allow-Origin': '*',
@@ -66,7 +66,7 @@ export const App = () => {
             formData.append("msg", texto)
             await axios({
               method: "POST",
-              url: "http://10.97.47.148:8000/encode",
+              url: "http://45.79.61.211/api/encode",
               data: formData,
               responseType: 'arraybuffer',
               headers: {
