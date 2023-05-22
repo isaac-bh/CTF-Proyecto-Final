@@ -25,6 +25,10 @@ spec:
     route:
     - destination:
         host: ctf-backend-proxy-service
+    timeout: 10s
+    retries:
+      attempts: 5
+      perTryTimeout: 10s
   - match:
     - uri:
         prefix: /app/
@@ -33,4 +37,8 @@ spec:
     route:
     - destination:
         host: ctf-frontend-desktop-service
+    timeout: 7s
+    retries:
+      attempts: 3
+      perTryTimeout: 7s
         
