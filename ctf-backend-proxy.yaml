@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ctf-backend-proxy
+  labels:
+    app: ctf-backend-proxy
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: ctf-backend-proxy
+  template:
+    metadata:
+      labels:
+        app: ctf-backend-proxy
+    spec:
+      containers:
+      - name: ctf-backend-proxy
+        image: isaacbh/ctf-backend-proxy
+        ports:
+        - containerPort: 8000
+        imagePullPolicy: Always
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ctf-backend-proxy-service
+  labels:
+    app: ctf-backend-proxy-service
+spec:
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 8000
+      targetPort: 8000
+  selector:
+    app: ctf-backend-proxy

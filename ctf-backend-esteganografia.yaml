@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ctf-backend-esteganografia
+  labels:
+    app: ctf-backend-esteganografia
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: ctf-backend-esteganografia
+  template:
+    metadata:
+      labels:
+        app: ctf-backend-esteganografia
+    spec:
+      containers:
+      - name: ctf-backend-esteganografia
+        image: isaacbh/ctf-backend-esteganografia
+        ports:
+        - containerPort: 8000
+        imagePullPolicy: Always
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ctf-backend-esteganografia-service
+  labels:
+    app: ctf-backend-esteganografia-service
+spec:
+  ports:
+    - name: http
+      port: 8000
+      targetPort: 8000
+  selector:
+    app: ctf-backend-esteganografia

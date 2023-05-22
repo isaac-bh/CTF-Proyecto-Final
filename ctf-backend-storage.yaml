@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ctf-backend-storage
+  labels:
+    app: ctf-backend-storage
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: ctf-backend-storage
+  template:
+    metadata:
+      labels:
+        app: ctf-backend-storage
+    spec:
+      containers:
+      - name: ctf-backend-storage
+        image: isaacbh/ctf-backend-storage
+        ports:
+        - containerPort: 8000
+        imagePullPolicy: Always
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ctf-backend-storage-service
+  labels:
+    app: ctf-backend-storage-service
+spec:
+  ports:
+    - name: http
+      port: 8000
+      targetPort: 8000
+  selector:
+    app: ctf-backend-storage

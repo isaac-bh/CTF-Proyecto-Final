@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tolerante-esteganografia-mobile-deployment
+  name: ctf-frontend-mobile
   labels:
-    app: toleranteesteganografiamobile
+    app: ctf-frontend-mobile
 spec:
   replicas: 4
   selector:
     matchLabels:
-      app: toleranteesteganografiamobile
+      app: ctf-frontend-mobile
   template:
     metadata:
       labels:
-        app: toleranteesteganografiamobile
+        app: ctf-frontend-mobile
     spec:
       containers:
-      - name: toleranteesteganografiamobile
+      - name: ctf-frontend-mobile
         image: jonhyble/tolerante_esteganografia_mobile:1.0
         ports:
         - containerPort: 5173
@@ -25,12 +25,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: tolerante-esteganografia-mobile-service
+  name: ctf-frontend-mobile-service
   labels:
-    app: tolerante-esteganografia-mobile-service
+    app: ctf-frontend-mobile-service
 spec:
   selector:
-    app: toleranteesteganografiamobile
+    app: ctf-frontend-mobile
   ports:
     - protocol: TCP
       port: 5173

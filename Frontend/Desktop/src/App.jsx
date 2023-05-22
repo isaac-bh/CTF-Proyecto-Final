@@ -35,8 +35,14 @@ export const App = () => {
       formData.append("image", img.file);
       await axios({
         method: "POST",
-        url: "http://ctf-backend:8000/decode",
+        url: "http://10.97.47.148:8000/decode",
         data: formData,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization',
+          'Access-Control-Expose-Headers': 'Content-Length,Content-Range'
+        }
       }).then((response) => {
         document.getElementById("dropzone-file2").value = response.data.message;
       });
@@ -60,9 +66,15 @@ export const App = () => {
             formData.append("msg", texto)
             await axios({
               method: "POST",
-              url: "http://ctf-backend:8000/encode",
+              url: "http://10.97.47.148:8000/encode",
               data: formData,
-              responseType: 'arraybuffer'
+              responseType: 'arraybuffer',
+              headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+                'Access-Control-Allow-Headers': 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization',
+                'Access-Control-Expose-Headers': 'Content-Length,Content-Range'
+              }
             }).then((response) => {
               let base64ImageString = Buffer.from(response.data, 'binary').toString('base64')
               let srcValue = "data:image/png;base64," + base64ImageString

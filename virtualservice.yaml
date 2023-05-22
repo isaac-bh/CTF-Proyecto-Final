@@ -6,7 +6,7 @@ spec:
   hosts: 
   - '*'
   gateways:
-  - tolerante-esteganografia-gateway
+  - ctf-esteganografia-gateway
   http:
   - match:
     - uri:
@@ -15,7 +15,7 @@ spec:
         uri: /
     route:
     - destination:
-        host: tolerante-esteganografia-desktop-service
+        host: ctf-frontend-desktop-service
         port:
           number: 5173
   - match:
@@ -25,6 +25,6 @@ spec:
         uri: /
     route:
     - destination:
-        host: tolerante-esteganografia-mobile-service
+        host: ctf-frontend-mobile-service
         port: 
           number: 5173

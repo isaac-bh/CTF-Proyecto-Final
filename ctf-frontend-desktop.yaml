@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ctf-frontend-desktop
+  labels:
+    app: ctf-frontend-desktop
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: ctf-frontend-desktop
+  template:
+    metadata:
+      labels:
+        app: ctf-frontend-desktop
+    spec:
+      containers:
+      - name: ctf-frontend-desktop
+        image: isaacbh/ctf-frontend-desktop
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ctf-frontend-desktop-service
+  labels:
+    app: ctf-frontend-desktop-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: ctf-frontend-desktop
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  sessionAffinity: None
